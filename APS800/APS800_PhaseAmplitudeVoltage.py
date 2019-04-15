@@ -191,4 +191,4 @@ for k in np.arange(0,np.size(indices)-1) :
 
     # title and save
     fig.suptitle('file : ' + str(files), size = s -4)
-    plt.savefig( str(output_dir) + '\\' + str(filename)+ '_measnum' +str(k) + '_FFTamplitude.png', dpi=300,  bbox_inches='tight')
+    plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename)+ '_measnum' +str(k) + '_FFTamplitude.png', dpi=300,  bbox_inches='tight')
