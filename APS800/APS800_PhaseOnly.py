@@ -93,4 +93,4 @@ plt.text(0.1*max(d), max(phase)-0.1*max(phase) ,'$\sigma_{rms}$ = ' + str(ecart_
 
 #Save figure
 fig.suptitle('file : ' + str(files), size = s -4)
-plt.savefig( str(output_dir) + '\\' + str(filename) + '_phase_histo.png', dpi=300,  bbox_inches='tight')
+plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename) + '_phase_histo.png', dpi=300,  bbox_inches='tight')
