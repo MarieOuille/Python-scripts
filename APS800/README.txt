@@ -1,8 +1,12 @@
 # APS800
 Python files for APS800
 
-You should use the file "APS800_PhaseANDHisto.py" as it is the most simple to use
+The file "APS800_PhaseAmplitudeVoltage.py" gives everything even if there are multiple measurements within one file
+(needs to be checked for more than 2 sequences though)
 
-However, for a partial plot from time a to time b you can use APS800_basic_plot_multiple_meas.py
+The file "APS800_PhaseOnly.py" plots the CEP vs time with an histogram and the standard deviation value
+-> to be changed to make it work for several sequences
+-> add possibility to plot an interval
 
-I will merge the 3 files later
+
+-> get basic info in the header
