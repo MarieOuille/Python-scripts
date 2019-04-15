@@ -10,15 +10,15 @@ from scipy.signal import welch # PSD using Welch method
 
 
 ## FIRST : EXTRACT DATA 
-## option 1 = ask for file location and filename
-#print ('Where is the file located?')
-#filepath = input('The path of the file is :')  # e.g. : C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz
-#print ('What is the name of the hdf5 file?')
-#filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
+# option 1 = ask for file location and filename
+print ('Where is the file located?')
+filepath = input('The path of the file is :')  # e.g. : C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz
+print ('What is the name of the hdf5 file?')
+filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
 
-#option 2 : enter it manually here :
-filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz'
-filename = 'phase_log_20170615_165102'
+##option 2 : enter it manually here :
+#filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz'
+#filename = 'phase_log_20170615_165102'
 
 
 
@@ -148,8 +148,8 @@ def plot_save_PSD(freq, psd, ipn):
     axarr[0].legend(loc='best')
     axarr[1].legend(loc='best')
     plt.savefig(str(output_dir) + '/' +  str(file[0:len(file)-5]) + '_PSD_IPN' + '.png', dpi = 300, bbox_inches='tight')
-    #plt.show()
 
 plot_save_PSD(freq, psd, ipn) 
+
 print('2 plots have been saved in the same folder as the file : PSD and IPN + CEP vs time')
 print('A text file with CEP values (centered around 0) has also been saved')
