@@ -1,0 +1,1 @@
+Beating between two waves with close frequencies
