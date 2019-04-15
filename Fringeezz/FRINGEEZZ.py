@@ -9,18 +9,26 @@ from scipy.signal import welch # PSD using Welch method
 
 
 
-# FIRST : EXTRACT DATA 
-#give the file path, e.g. : 'C:\Users\ouille\Desktop\\FRINGEEZZ\20170512\feedback_digital_dazzler'
-print ('Where is the file located?')
-filepath = input('The path of the file is :')
-#give the name of the hdf5 file, e.g. :  'phase_log_20170512_110754' 
-print ('What is the name of the hdf5 file?')
-filename = input('The name of the file is :')
-file= str(filename) + '.hdf5'
-#output_dir is the path of the output directory, i.e. where you want the results to be saved
-#e.g. : output_dir='C:\\Users\\ouille\\Desktop\\results'
-#You can modify it to save data wherever you wish but if you don't change anything, data will be saved in the same location as the hdf5 file
-output_dir=filepath
+## FIRST : EXTRACT DATA 
+## option 1 = ask for file location and filename
+#print ('Where is the file located?')
+#filepath = input('The path of the file is :')  # e.g. : C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz
+#print ('What is the name of the hdf5 file?')
+#filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
+
+#option 2 : enter it manually here :
+filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz'
+filename = 'phase_log_20170615_165102'
+
+
+
+file= str(filename) + '.hdf5' 
+
+#output directory = new directory created where "fringeezz.py" is located
+path = os.getcwd()
+if not os.path.exists('analyzed_data'):
+    os.mkdir('analyzed_data')
+output_dir=path+'\\analyzed_data'
 
 def fringeezz_load_h5_data_log(file, filepath, print_structure=True):
     """ load data log file in HDF5 format from the fringeezz from default directory.
@@ -38,11 +46,10 @@ def fringeezz_load_h5_data_log(file, filepath, print_structure=True):
             phases = float('nan')
         timestamps = np.array(h5f['timestamps'], dtype = int).ravel()
     return config[0].decode('UTF-8'), timestamps, phases*1e-4
+config, timestamps, phases = fringeezz_load_h5_data_log(file,filepath) #calls the function defined above to extract data from your hdf5 file 
+print(config) #To get info on the configuration of the Fringeezz at the time of the measurement :
 
-#call the function defined above to extract data from your hdf5 file :
-config, timestamps, phases = fringeezz_load_h5_data_log(file,filepath)
-#To get info on the configuration of the Fringeezz at the time of the measurement :
-print(config)
+# STRUCTURE OF THE HDF FILES :    
 # The hdf5 file is divided into 3 parts : CEP values ; time stamps ; configuration
 # Each carrier-enveloppe phase value is recorded as an integer : you must divide by 10 000 to get it in radians
 # phase values are recorded in an array
@@ -50,6 +57,7 @@ print(config)
 # timestamps : list of times (sec) when each measurement line ended 
 # printing timestamps[1] - timestamps[0] should therefore return 20 as there are 20 seconds between two lines of measurements
 # so now, let's deal with these raw data and turn it into nice basic lists :
+    
 list_phases = phases[0]
 for i in np.arange(1,np.size(phases[:,1])):
     list_phases = np.append(list_phases, phases[i])
@@ -65,8 +73,8 @@ list_phases = list_phases[start:np.size(list_phases)] - np.mean(list_phases[star
 time = np.arange(0,np.size(phases[0])*np.size(phases[:,1]))
 time = (time[start:np.size(time)]-start)/60000
 
-  #to save CEP values as a simple basic txt file :
-newfile=open(str(filepath) + '/' + str(filename) + '_txt_data.txt','w')  
+#to save CEP values as a simple basic txt file :
+newfile=open(str(output_dir) + '/' + str(filename) + '_txt_data.txt','w')  
 newfile.write('CEP(rad)' +'  ' + 'time(min)' +"\n")
 for i in np.arange(0,np.size(list_phases)):
     newfile.write(str(list_phases[i])+ '  ' +  str(time[i]) + "\n")
@@ -75,26 +83,30 @@ newfile.close()
        
        
 # SECOND : PLOT AND SAVE PHASE/TIME + HISTOGRAM
-f, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(24,8), gridspec_kw = {'width_ratios':[2.3, 0.7]})
-plt.subplots_adjust(left=0.05, right=0.97, wspace=0)
-ax1.plot(time, list_phases, '.', markersize = 1)
-ax1.set_ylim([-3,3])
+s = 12  #size of the text
+c = 'navy'  #color
+f, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(9,3), gridspec_kw = {'width_ratios':[2.3, 0.7]})
+plt.subplots_adjust(left=0.05, right=0.97, wspace=0.01)
+ax1.plot(time, list_phases, '.', markersize = 1, color = c)
+ax1.set_ylim([-np.pi,np.pi])
+ax1.set_yticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi])
+ax1.set_yticklabels(['$-\pi$', '-$\pi$/2', '0', '$\pi$/2' , '$\pi$'])
 ax1.set_xlim([0,max(time)])
-ax1.tick_params(labelsize=25)
-ax1.set_xlabel('time (min)', fontsize=25)
-ax1.set_ylabel('CEP (rad)', fontsize=25)
-ax2.hist(list_phases, bins=25, orientation='horizontal')
-ax2.set_xlabel('occurrence', fontsize=25)
-ax2.tick_params(labelsize=25)
-ax2.annotate(str(ecart_type) + ' mrad rms', xy=(10000,2), size = 30)
-f.savefig(str(output_dir) + '/' + str(file[0:len(file)-5]) + '_Phase_and_Histo' + '.png', dpi=400)
+ax1.tick_params(labelsize=s)
+ax1.set_xlabel('time (min)', fontsize=s)
+ax1.set_ylabel('CEP (rad)', fontsize=s)
+ax2.hist(list_phases, bins=25, orientation='horizontal',color = c)
+ax2.set_xlabel('occurrence', fontsize=s)
+ax2.tick_params(labelsize=s)
+ax2.annotate('$\sigma_{rms} = $' + str(ecart_type) + ' mrad', xy=(5000,2), size = s +2)
+ax2.set_axis_off()
+f.savefig(str(output_dir) + '/' + str(file[0:len(file)-5]) + '_Phase_and_Histo' + '.png', dpi=400,bbox_inches='tight')
 
 
 
 
 #THIRD : PLOT PSD_IPN
-reprate = 1000.
-#repetition rate of the laser = 1kHz
+reprate = 1000.  #repetition rate of the laser = 1kHz
 def intg_phase_noise(df, PSD):
     """ Calculate the inegrated phase noise from the PSD
     input: df: frequency step of the PSD in Hz
@@ -130,12 +142,12 @@ def plot_save_PSD(freq, psd, ipn):
     axarr[1].set_xlabel('Frequency [Hz]')
     axarr[1].set_ylabel('IPN [mrad]')
 
-    axarr[0].loglog(freq, psd, label = 'psd')
-    axarr[1].semilogx(freq, ipn*1e3, label = 'ipn')
+    axarr[0].loglog(freq, psd, label = 'psd', color = c)
+    axarr[1].semilogx(freq, ipn*1e3, label = 'ipn', color = c)
 
     axarr[0].legend(loc='best')
     axarr[1].legend(loc='best')
-    plt.savefig(str(output_dir) + '/' +  str(file[0:len(file)-5]) + '_PSD_IPN' + '.png', dpi = 300)
+    plt.savefig(str(output_dir) + '/' +  str(file[0:len(file)-5]) + '_PSD_IPN' + '.png', dpi = 300, bbox_inches='tight')
     #plt.show()
 
 plot_save_PSD(freq, psd, ipn) 
