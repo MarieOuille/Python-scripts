@@ -17,8 +17,8 @@ from itertools import takewhile
 #print ('What is the name of the .dat file? e.g : 20190301_CEPdata ')
 #filename = input('The name of the file is :')
 
-filepath = r'Z:\Laser\CEP\20190311'
-filename ='savesingle'
+filepath = r'Z:\Laser\CEP\20180615'
+filename ='CEP stab_30ms'
 
 file= str(filename) + '.dat'
 
@@ -61,7 +61,7 @@ for i in np.arange(0,nb):
        
 #Figure parameters
 fig=plt.figure(figsize=(10,3))
-gs = gridspec.GridSpec(1, 2, wspace = 0,  width_ratios=[2, 1])
+gs = gridspec.GridSpec(1, 2, wspace = 0,  width_ratios=[3, 1])
 s=12
 
 
@@ -103,14 +103,11 @@ plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename) + '_p
 
 
 
-def st(l, b): return len([x for x in takewhile(lambda x: x[1] <= b, enumerate(l))])
+def index(l, p): return len([x for x in takewhile(lambda x: x[1] <= p, enumerate(l))])
     
-def partial (start, end):
-    ##optional : plot just one part of the graph 
-#    start = 35 #s
-#    end = 42 #s
-    a = st(time,start)
-    b = st(time, end)
+def partial (start, end, save=0, zero=0):   #start and end are given in seconds   #if save =1, it will save it   #if zero=1, the origin of the plot is 0
+    a = index(time, start)
+    b = index(time, end)
     
     
     #Phase deviation rms in mrad
@@ -124,29 +121,40 @@ def partial (start, end):
            
     #Figure parameters
     fig=plt.figure(figsize=(10,3))
-    gs = gridspec.GridSpec(1, 2, wspace = 0,  width_ratios=[2, 1])
+    gs = gridspec.GridSpec(1, 2, wspace = 0,  width_ratios=[3, 1])
     s=12
     
     #Histogram
     plt.subplot(gs[0,1])
     plt.hist(phase[a:b]-np.mean(phase[a:b]), bins=round(ecart_type2/20), orientation='horizontal', color='navy')  #bins =.... number of columns
-    plt.yticks([])
     plt.xlabel('occurrence', size=s)
     plt.ylim([-np.pi,np.pi])
-    plt.tick_params(axis='both',labelsize=s)
-    d,f=np.histogram(phase[a:b]-np.mean(phase[a:b]), bins=round(ecart_type2/20))
+    plt.tick_params(axis='both',labelsize=s) 
+    plt.yticks([])
     plt.axis('off')
-    plt.text(0.1*max(d), 0.9*np.pi, '$\sigma_{rms}$ = ' + str(ecart_type2) + ' mrad', size=s+1)
+    d,f=np.histogram(phase[a:b]-np.mean(phase[a:b]), bins=round(ecart_type2/20)) 
+    plt.text(0.1*max(d), 0.8*np.pi, '$\sigma_{rms}$ = ' + str(ecart_type2) + ' mrad', size=s+1)
     
     #CEP as a function of time
     plt.subplot(gs[0,0])
-    plt.plot(time[a:b],phase[a:b]-np.mean(phase[a:b]), '.', markersize=1.2,  color='navy')
-    plt.xlabel('time (sec)', size=s)
-    plt.ylabel('relative CEP (rad)', size=s)
-    plt.tick_params(axis='both',labelsize=s)
+    if zero ==1:
+        plt.plot(time[a:b]-time[a],phase[a:b]-np.mean(phase[a:b]), '.', markersize=1.2,  color='navy')
+        plt.xlim([0, time[b]-time[a]])
+    elif zero ==0:
+        plt.plot(time[a:b],phase[a:b]-np.mean(phase[a:b]), '.', markersize=1.2,  color='navy')
+        plt.xlim([time[a], time[b]])
     plt.ylim([-np.pi,np.pi])
+    plt.xlabel('time (sec)', size=s) 
+    plt.ylabel('relative CEP (rad)', size=s)
+    plt.tick_params(axis='both',labelsize=s) 
     plt.yticks([-np.pi, -np.pi/2,0,np.pi/2, np.pi], ['-$\pi$','-$\pi$/2', '0', '$\pi$/2','$\pi$' ], size=s)
     
     #Save figure
     fig.suptitle('file : ' + str(files), size = s -4)
-    plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename) + '_phase_histo_interval-' + str(start) + '_' + str(end) +'.png', dpi=300,  bbox_inches='tight')
+    
+    if save == 1:
+        plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename) + '_phase_histo_interval-' + str(start) + '_' + str(end) +'.png', dpi=300,  bbox_inches='tight')
+       
+        
+        
+partial(start=0, end=20, save=1, zero=0)
