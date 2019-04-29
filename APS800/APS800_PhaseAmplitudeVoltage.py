@@ -16,15 +16,45 @@ import os
 #print ('\n', 'What is the name of the .dat file?  (e.g : 20190301_CEPdata) ')
 #filename = input('The name of the file is :  ')
 
-filepath = r'Z:\Laser\CEP\20150127'
-filename ='pc27.4Kv-QTTENUE'
+filepath = r'Z:\Laser\CEP\20190425'
+filename ='APS800_HCF-1bar_3-5fsdscan_noCMinf2f_nofeedback_oscillatorlocked'
+
+
+
+
+        
+def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
+       
+    
+    path = os.getcwd()
+    if not os.path.exists('analyzed_data'):
+        os.mkdir('analyzed_data')
+    output_dir=path+'\\analyzed_data'    #output directory = new directory created where this python file is located
+    files = str(filepath) + "\\" + str(filename) + '.dat'
+                  
+               
+    #split the .dat file into different measurements
+    fins = [] ; debuts = []
+    data = open(files, 'r')
+    line = data.readlines()
+        
+    
+
+    for i, value in enumerate(line):
+        if 'Measurement finished' in line[i]:
+            fins.append(i)
+        if 'APS800 log file' in line[i]:
+            debuts.append(i)
+    print ('\n', 'This file contains ', str(np.size(debuts)), ' measurements', '\n', '\n')
+
+#    info(n)
+#    APSplot(n)
 
 
 
 
 
-
-def info (n): #information contained in the file header :
+#def info (n): #information contained in the file header :
     subheader = line[debuts[n]:debuts[n]+9]
     print ('\n','\n', '\n','Measurement n°',str(n+1), '/', str(np.size(debuts)),'\n','Here are some basic information on your ', subheader[0][0:32], ': \n')
     param3 = subheader[3].split(',')
@@ -55,7 +85,7 @@ def info (n): #information contained in the file header :
 
 
 
-def APSplot (n):
+#def APSplot (n):
 
     subdata = line[debuts[n]+9 :fins[n]]
     time = [];phase=[];amp=[];voltage=[]; squared_phase=[]
@@ -139,30 +169,6 @@ def APSplot (n):
         
         
         
-        
-def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
-       
-    path = os.getcwd()
-    if not os.path.exists('analyzed_data'):
-        os.mkdir('analyzed_data')
-    output_dir=path+'\\analyzed_data'    #output directory = new directory created where this python file is located
-    files = str(filepath) + "\\" + str(filename) + '.dat'
-                  
-               
-    #split the .dat file into different measurements
-    fins = [] ; debuts = []
-    data = open(files, 'r')
-    line = data.readlines()
-    for i, value in enumerate(line):
-        if 'Measurement finished' in line[i]:
-            fins.append(i)
-        if 'APS800 log file' in line[i]:
-            debuts.append(i)
-    print ('\n', 'This file contains ', str(np.size(debuts)), ' measurements', '\n', '\n')
-
-    info(n)
-    APSplot(n)
-
 
 
 
