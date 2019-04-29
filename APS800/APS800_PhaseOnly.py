@@ -17,8 +17,9 @@ from itertools import takewhile
 #print ('What is the name of the .dat file? e.g : 20190301_CEPdata ')
 #filename = input('The name of the file is :')
 
-filepath = r'Z:\Laser\CEP\20180615'
-filename ='CEP stab_30ms'
+
+filepath = r'Z:\Laser\CEP\20190425'
+filename ='APS800_HCF-1bar_3-5fsdscan_noCMinf2f_nofeedback_oscillatorlocked'
 
 file= str(filename) + '.dat'
 
