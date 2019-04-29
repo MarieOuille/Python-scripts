@@ -11,14 +11,14 @@ from scipy.signal import welch # PSD using Welch method
 
 ## FIRST : EXTRACT DATA 
 # option 1 = ask for file location and filename
-print ('Where is the file located?')
-filepath = input('The path of the file is :')  # e.g. : C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz
-print ('What is the name of the hdf5 file?')
-filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
+#print ('Where is the file located?')
+#filepath = input('The path of the file is :')  # e.g. : C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz
+#print ('What is the name of the hdf5 file?')
+#filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
 
-##option 2 : enter it manually here :
-#filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Fringeezz'
-#filename = 'phase_log_20170615_165102'
+#option 2 : enter it manually here :
+filepath = r'Z:\Laser\CEP\20190425'
+filename = 'phase_log_20190425_175948'
 
 
 
@@ -87,7 +87,7 @@ s = 12  #size of the text
 c = 'navy'  #color
 f, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(9,3), gridspec_kw = {'width_ratios':[2.3, 0.7]})
 plt.subplots_adjust(left=0.05, right=0.97, wspace=0.01)
-ax1.plot(time, list_phases, '.', markersize = 1, color = c)
+ax1.plot(time, list_phases, '*', markersize = 0.2, color = c)
 ax1.set_ylim([-np.pi,np.pi])
 ax1.set_yticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi])
 ax1.set_yticklabels(['$-\pi$', '-$\pi$/2', '0', '$\pi$/2' , '$\pi$'])
