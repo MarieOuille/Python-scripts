@@ -17,8 +17,8 @@ from scipy.signal import welch # PSD using Welch method
 #filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
 
 #option 2 : enter it manually here :
-filepath = r'Z:\Laser\CEP\20190425'
-filename = 'phase_log_20190425_175948'
+filepath = r'Z:\Laser\CEP\20190430'
+filename = 'phase_log_20190430_152122'
 
 
 
@@ -73,21 +73,21 @@ list_phases = list_phases[start:np.size(list_phases)] - np.mean(list_phases[star
 time = np.arange(0,np.size(phases[0])*np.size(phases[:,1]))
 time = (time[start:np.size(time)]-start)/60000
 
-#to save CEP values as a simple basic txt file :
-newfile=open(str(output_dir) + '/' + str(filename) + '_txt_data.txt','w')  
-newfile.write('CEP(rad)' +'  ' + 'time(min)' +"\n")
-for i in np.arange(0,np.size(list_phases)):
-    newfile.write(str(list_phases[i])+ '  ' +  str(time[i]) + "\n")
-newfile.close()       
-       
-       
+##to save CEP values as a simple basic txt file :
+#newfile=open(str(output_dir) + '/' + str(filename) + '_txt_data.txt','w')  
+#newfile.write('CEP(rad)' +'  ' + 'time(min)' +"\n")
+#for i in np.arange(0,np.size(list_phases)):
+#    newfile.write(str(list_phases[i])+ '  ' +  str(time[i]) + "\n")
+#newfile.close()       
+#       
+#       
        
 # SECOND : PLOT AND SAVE PHASE/TIME + HISTOGRAM
 s = 12  #size of the text
 c = 'navy'  #color
 f, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(9,3), gridspec_kw = {'width_ratios':[2.3, 0.7]})
 plt.subplots_adjust(left=0.05, right=0.97, wspace=0.01)
-ax1.plot(time, list_phases, '*', markersize = 0.2, color = c)
+ax1.plot(time, list_phases, '.', markersize = 0.0001, color = c)
 ax1.set_ylim([-np.pi,np.pi])
 ax1.set_yticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi])
 ax1.set_yticklabels(['$-\pi$', '-$\pi$/2', '0', '$\pi$/2' , '$\pi$'])
@@ -100,7 +100,7 @@ ax2.set_xlabel('occurrence', fontsize=s)
 ax2.tick_params(labelsize=s)
 ax2.annotate('$\sigma_{rms} = $' + str(ecart_type) + ' mrad', xy=(5000,2), size = s +2)
 ax2.set_axis_off()
-f.savefig(str(output_dir) + '/' + str(file[0:len(file)-5]) + '_Phase_and_Histo' + '.png', dpi=400,bbox_inches='tight')
+f.savefig(str(output_dir) + '/' + str(file[0:len(file)-5]) + '_Phase_and_Histo' + '.png', dpi=1000,bbox_inches='tight')
 
 
 
