@@ -18,8 +18,9 @@ from itertools import takewhile
 #filename = input('The name of the file is :')
 
 
-filepath = r'Z:\Laser\CEP\20190425'
-filename ='APS800_HCF-1bar_3-5fsdscan_noCMinf2f_nofeedback_oscillatorlocked'
+filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\APS800'
+filename ='cep after second dazzler loop3'
+
 
 file= str(filename) + '.dat'
 
@@ -92,7 +93,7 @@ plt.text(0.1*max(d), max(phase)-0.1*max(phase) ,'$\sigma_{rms}$ = ' + str(ecart_
 
 #Save figure
 fig.suptitle('file : ' + str(files), size = s -4)
-plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename) + '_phase_histo.png', dpi=300,  bbox_inches='tight')
+plt.savefig( str(output_dir) + '\\' + str(filename) + '_phase_histo.png', dpi=300,  bbox_inches='tight')
 
 
 
@@ -154,8 +155,8 @@ def partial (start, end, save=0, zero=0):   #start and end are given in seconds 
     fig.suptitle('file : ' + str(files), size = s -4)
     
     if save == 1:
-        plt.savefig( str(output_dir) + '\\' + filepath[-8::] + '_' + str(filename) + '_phase_histo_interval-' + str(start) + '_' + str(end) +'.png', dpi=300,  bbox_inches='tight')
+        plt.savefig( str(output_dir) + '\\' + str(filename) + '_phase_histo_interval-' + str(start) + '_' + str(end) +'.png', dpi=300,  bbox_inches='tight')
        
         
         
-partial(start=0, end=20, save=1, zero=0)
+#partial(start=0, end=60, save=1, zero=0)
