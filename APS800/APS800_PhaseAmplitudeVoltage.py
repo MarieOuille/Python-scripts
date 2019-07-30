@@ -17,14 +17,14 @@ from itertools import takewhile
 #print ('\n', 'What is the name of the .dat file?  (e.g : 20190301_CEPdata) ')
 #filename = input('The name of the file is :  ')
 
-filepath = r'Z:\Laser\CEP\20190430'
-filename ='30ms'
+filepath = r'Z:\Laser\CEP\20190425'
+filename ='feedbackAOM-oldsoftwarev17-int1ms'
 
 
 
 
         
-def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
+def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0, partial=0, start=0, end=10):
        
     
     path = os.getcwd()
@@ -48,14 +48,11 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
             debuts.append(i)
     print ('\n', 'This file contains ', str(np.size(debuts)), ' measurements', '\n', '\n')
 
-#    info(n)
-#    APSplot(n)
 
 
 
 
-
-#def info (n): #information contained in the file header :
+    #information contained in the file header :
     subheader = line[debuts[n]:debuts[n]+9]
     print ('\n','\n', '\n','Measurement n°',str(n+1), '/', str(np.size(debuts)),'\n','Here are some basic information on your ', subheader[0][0:32], ': \n')
     param3 = subheader[3].split(',')
@@ -84,17 +81,15 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
 
 
 
-
-
-#def APSplot (n):
-
+    #subdata = data of measurement number n only
     subdata = line[debuts[n]+9 :fins[n]]
-    time = [];phase=[];amp=[];voltage=[]; squared_phase=[]
+    time = [];phase=[];amp=[];voltage=[]; squared_phase=[] ; target = [];
     for k, p in enumerate(subdata):
         time.append(float(p.split('\t')[0]))
         phase.append(float(p.split('\t')[1]))
         amp.append(float(p.split('\t')[3]))
         voltage.append(float(p.split('\t')[6]))
+        target.append(float(p.split('\t')[2]))
         squared_phase.append(phase[k]*phase[k])
 
         
@@ -112,7 +107,8 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
         #center values on 0 
         for i in np.arange(0,np.size(phase)):
             phase[i]=phase[i]-mean_phase
-           
+            target[i]=target[i] - mean_phase
+ 
         #Figure parameters
         fig=plt.figure(figsize=(12,7))
         gs = gridspec.GridSpec(3, 2, wspace = 0,  width_ratios=[3, 1])
@@ -120,22 +116,25 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
             
         #CEP as a function of time
         plt.subplot(gs[1,0])
-        plt.plot(time,phase, '.', markersize=1.2,  color='navy')
+        plt.plot(time,phase, '.', markersize=1,  color='navy', label='measured phase')
+        plt.plot(time,target, '--', markersize=0.5,  color='grey', alpha =0.8, label = 'target phase')
         plt.ylabel('relative CEP (rad)', size=s, color='navy')
         plt.tick_params(axis='both',labelsize=s)
         plt.tick_params(axis='y',labelcolor ='navy', color = 'navy')
         if lines2pi == 1: # Puts some horizontal lines every 2Pi starting from target value
-            target = 0   #CEP target value
-            plt.axhline(target, color = 'grey', alpha = 0.8, linewidth = 1)  #horizontal line = target value
+            targetp = target[0]   #CEP target value
+            plt.axhline(targetp, color = 'grey', alpha = 0.8, linewidth = 1)  #horizontal line = target value
             upper = max(round(max(phase)/(2*np.pi)),  abs(round(min(phase)/(2*np.pi))) )
-            for n in np.arange(1,upper):  
-                plt.axhline(target + n*2*np.pi, color = 'grey', alpha = 0.2, linewidth = 1)
-                plt.axhline(target - n*2*np.pi, color = 'grey', alpha = 0.2, linewidth = 1)
+            for k in np.arange(1,upper+1):  
+                plt.axhline(targetp + k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1, label='$\pm 2n\pi$, n integer')
+                plt.axhline(targetp - k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1)
         if picenter == 1:
             plt.ylim([-np.pi,np.pi])
             plt.yticks([-np.pi, -np.pi/2,0,np.pi/2, np.pi], ['-$\pi$','-$\pi$/2', '0', '$\pi$/2','$\pi$' ], size=s)
         elif picenter == 0:
             plt.ylim(min(phase)-0.1*abs(min(phase)), max(phase)+0.1*max(phase) )
+        plt.legend(loc= 'best', fontsize=s-4)
+        
         
         #Histogram
         plt.subplot(gs[1,1])
@@ -153,14 +152,14 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
         
         #FFT amplitude = f(time)
         plt.subplot(gs[0,0])
-        plt.plot(time, amp, '.',markersize=1.2, color = 'red')
+        plt.plot(time, amp, '.',markersize=1, color = 'red')
         plt.ylabel('FFT amplitude', color='red', size=s)
         plt.tick_params(axis='y', labelcolor='red',color='red')
         plt.tick_params(axis='both',labelsize=s)    
         
         # Output voltage = f(time)
         plt.subplot(gs[2,0])
-        plt.plot(time, voltage, '.',markersize=1.2, color = 'green')
+        plt.plot(time, voltage, '.',markersize=1, color = 'green')
         plt.xlabel('time(sec)',size=s)
         plt.ylabel('Output voltage (V)', color='green', size=s)
         plt.tick_params(axis='y', labelcolor='green',color='green')
@@ -212,9 +211,11 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
         mean_squared_phase = sum(squared_phase[a:b])/np.size(squared_phase[a:b])
         ecart_type = int(round(np.sqrt(mean_squared_phase - mean_phase*mean_phase),3)*1000)
         
+        
         #center values on 0 
         for i in np.arange(0,np.size(phase)):
             phase[i]=phase[i]-mean_phase
+            target[i]=target[i] - mean_phase
            
         #Figure parameters
         fig=plt.figure(figsize=(12,7))
@@ -223,22 +224,24 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
             
         #CEP as a function of time
         plt.subplot(gs[1,0])
-        plt.plot(time[a:b],phase[a:b], '.', markersize=1.2,  color='navy')
+        plt.plot(time[a:b],phase[a:b], '.', markersize=1,  color='navy', label='measured phase')
+        plt.plot(time[a:b],target[a:b], '--', markersize=0.5,  color='grey', alpha =0.8, label = 'target phase')
         plt.ylabel('relative CEP (rad)', size=s, color='navy')
         plt.tick_params(axis='both',labelsize=s)
         plt.tick_params(axis='y',labelcolor ='navy', color = 'navy')
         if lines2pi == 1: # Puts some horizontal lines every 2Pi starting from target value
-            target = 0   #CEP target value
-            plt.axhline(target, color = 'grey', alpha = 0.8, linewidth = 1)  #horizontal line = target value
+            targetp = target[a]   #CEP target value
+            plt.axhline(targetp, color = 'grey', alpha = 0.8, linewidth = 1)  #horizontal line = target value
             upper = max(round(max(phase[a:b])/(2*np.pi)),  abs(round(min(phase[a:b])/(2*np.pi))) )
-            for n in np.arange(1,upper):  
-                plt.axhline(target + n*2*np.pi, color = 'grey', alpha = 0.2, linewidth = 1)
-                plt.axhline(target - n*2*np.pi, color = 'grey', alpha = 0.2, linewidth = 1)
+            for k in np.arange(1,upper+1):  
+                plt.axhline(targetp + k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1, label='$\pm 2n\pi$, n integer')
+                plt.axhline(targetp - k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1)
         if picenter == 1:
             plt.ylim([-np.pi,np.pi])
             plt.yticks([-np.pi, -np.pi/2,0,np.pi/2, np.pi], ['-$\pi$','-$\pi$/2', '0', '$\pi$/2','$\pi$' ], size=s)
         elif picenter == 0:
             plt.ylim(min(phase[a:b])-0.1*abs(min(phase[a:b])), max(phase[a:b])+0.1*max(phase[a:b]) )
+        plt.legend(loc= 'best', fontsize=s-4)
         
         #Histogram
         plt.subplot(gs[1,1])
@@ -256,14 +259,14 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
         
         #FFT amplitude = f(time)
         plt.subplot(gs[0,0])
-        plt.plot(time[a:b], amp[a:b], '.',markersize=1.2, color = 'red')
+        plt.plot(time[a:b], amp[a:b], '.',markersize=1, color = 'red')
         plt.ylabel('FFT amplitude', color='red', size=s)
         plt.tick_params(axis='y', labelcolor='red',color='red')
         plt.tick_params(axis='both',labelsize=s)    
         
         # Output voltage = f(time)
         plt.subplot(gs[2,0])
-        plt.plot(time[a:b], voltage[a:b], '.',markersize=1.2, color = 'green')
+        plt.plot(time[a:b], voltage[a:b], '.',markersize=1, color = 'green')
         plt.xlabel('time(sec)',size=s)
         plt.ylabel('Output voltage (V)', color='green', size=s)
         plt.tick_params(axis='y', labelcolor='green',color='green')
@@ -289,13 +292,17 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0):
     
     
     
-
-#PARTIAL PLOT PARAMATERS 
-partial = 0 #1 if YES, you want to make a partial plot   
-#0 if NO you don't want to make a partial plot
-start = 0  #begining of the plot in seconds
-end = 10 #end of the plot in seconds 
+    
+    
+    
+    
 
 
 
-APS (filepath, filename, 0)   #the last argument is the measurement number ; Be careful, it starts with 0 !!!
+APS (filepath, filename, 0, save=1, picenter=0, lines2pi=0, partial = 0, start=8 , end=14)   
+#the 3rd argument is the measurement number you want to plot ; Be careful, it starts with 0 !!!
+#save = 1 to save the .png file
+#picenter = 1 : YES, plot between -pi and +pi
+# lines2pi = 1 : ADDS some horizontal lines every 2pi
+# partial = 1 : YES, you want to make a partial plot   
+# start and end : beginning and end of the partial plot (seconds)
