@@ -15,12 +15,12 @@ from matplotlib.colors import LinearSegmentedColormap
 
 
 ## FILEPATH for the focal spot image
-filepath = r'Z:\SHHG\Stefan_and_Marie\ExperimentsWithDan_February2019\20190213'
-filename = 'FocalSpot0.tiff'
+filepath = r'Z:\SHHG\Stefan_and_Marie\2nd-campaign-May2019\focal spot\2019\05\17'
+filename = 'tir201905176.tiff'
 
-outdir = r'C:\Users\ouille\Desktop\codes_python_divers'
-E = 2.5
-tau = 4.
+outdir = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Focal-Spot'
+E = 3
+tau = 3.87
 scaling_x =  0.028 #43./768. #um per pixel
 scaling_y =   0.028 #59./1024.
 h = 7.  #half the image size in µm
