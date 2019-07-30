@@ -73,21 +73,52 @@ list_phases = list_phases[start:np.size(list_phases)] - np.mean(list_phases[star
 time = np.arange(0,np.size(phases[0])*np.size(phases[:,1]))
 time = (time[start:np.size(time)]-start)/60000
 
+       
+       
+
+##m-shots averages 
+#m = 3
+#list_phasesm = [] ; timem =[] ; ecart_typem = [];
+#for k, value in enumerate (np.arange(0,np.size(list_phases)/m)):
+#    list_phasesm = np.append ( list_phasesm, np.mean (list_phases[k*m:k*m+m]) )
+#    timem =  np.append ( timem ,  np.mean(time[k*m:k*m+m]) )
+#    print (str(k) + '/' + str (np.size(list_phases)/m))
+#ecart_typem = int( np.sqrt(np.mean(list_phasesm**2)-(np.mean(list_phasesm))**2) * 1000)
+#plt.figure(figsize=(7,3))
+#plt.plot(timem, list_phasesm, '.', color = 'navy')   
+#plt.ylim([-np.pi,np.pi])
+#plt.yticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi], ['$-\pi$', '-$\pi$/2', '0', '$\pi$/2' , '$\pi$']) 
+#plt.xlabel('time (min)')
+#plt.ylabel('CEP (rad)')
+#plt.title(str(ecart_typem)+ ' mrad rms (averages over ' + str(m)+ ' shots)')
+#plt.savefig(str(output_dir) + '/' +  str(file[0:len(file)-5]) + '_averaged'+str(m)+ 'shots' + '.png', dpi = 300, bbox_inches='tight')
+       
+       
+
+
+
+
 ##to save CEP values as a simple basic txt file :
 #newfile=open(str(output_dir) + '/' + str(filename) + '_txt_data.txt','w')  
 #newfile.write('CEP(rad)' +'  ' + 'time(min)' +"\n")
 #for i in np.arange(0,np.size(list_phases)):
 #    newfile.write(str(list_phases[i])+ '  ' +  str(time[i]) + "\n")
 #newfile.close()       
-#       
-#       
-       
+
+
+
+
+
+
+
+
+      
 # SECOND : PLOT AND SAVE PHASE/TIME + HISTOGRAM
 s = 12  #size of the text
 c = 'navy'  #color
 f, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(9,3), gridspec_kw = {'width_ratios':[2.3, 0.7]})
 plt.subplots_adjust(left=0.05, right=0.97, wspace=0.01)
-ax1.plot(time, list_phases, '.', markersize = 0.0001, color = c)
+ax1.plot(time, list_phases, '.', markersize = 1, color = c)
 ax1.set_ylim([-np.pi,np.pi])
 ax1.set_yticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi])
 ax1.set_yticklabels(['$-\pi$', '-$\pi$/2', '0', '$\pi$/2' , '$\pi$'])
@@ -98,7 +129,7 @@ ax1.set_ylabel('CEP (rad)', fontsize=s)
 ax2.hist(list_phases, bins=25, orientation='horizontal',color = c)
 ax2.set_xlabel('occurrence', fontsize=s)
 ax2.tick_params(labelsize=s)
-ax2.annotate('$\sigma_{rms} = $' + str(ecart_type) + ' mrad', xy=(5000,2), size = s +2)
+ax2.annotate('$\sigma_{rms} = $' + str(ecart_type) + ' mrad', xy=(100,2), size = s +2)
 ax2.set_axis_off()
 f.savefig(str(output_dir) + '/' + str(file[0:len(file)-5]) + '_Phase_and_Histo' + '.png', dpi=1000,bbox_inches='tight')
 
