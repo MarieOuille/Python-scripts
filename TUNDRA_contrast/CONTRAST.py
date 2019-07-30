@@ -18,22 +18,47 @@ cwd = os.getcwd()
 
 #FEMTOPOWER
 
-filepath = r'Z:\Laser\TUNDRA\20190423'
-filename0='AC20190423-1809-.dat'
+filepath = r'Z:\Laser\TUNDRA\20190612-SN2-CC'
+filename0='AC20190612-1538-'
+file = str(filepath) + '/' + str(filename0) + '.dat'
 
-data0 = np.loadtxt(str(filepath) + '/' + str(filename0), skiprows=20)
+data0 = np.loadtxt(str(file), skiprows=20)
 t0 = data0[:,0]
 fig = plt.figure(figsize=[10,6])
 plt.semilogy(t0, (data0[:,1])/max(data0[:,1]), label= 'original trace', color='navy')
-plt.semilogy(t0, (data0[:,1][::-1])/max(data0[:,1]), label= 'mirrored trace', color='navy', alpha = 0.2)
-plt.xlim(-900,-800)
-plt.ylim(1e-13, 1e-6)
+#plt.semilogy(t0, (data0[:,1][::-1])/max(data0[:,1]), label= 'mirrored trace', color='navy', alpha = 0.2)
+#plt.xlim(-900,-800)
+#plt.ylim(1e-13, 1e-6)
 plt.xlabel('time (ps)')
 plt.ylabel('Normalized intensity (log scale, a.u.)')
 plt.legend()
 fig.suptitle('Compression Chamber, 0 mbar' + '\n' + 'file = ' + str(filename0))
-plt.savefig(str(filepath)+ '\\' + str(filename0) + '_zoom.png'  , dpi=500)
-#
+plt.savefig(str(filepath)+ '\\' + str(filename0) + '_plot.png'  , dpi=500)
+
+
+
+
+#Read infos contained in the first lines
+data1 = open(file, 'r')
+line = data1.readlines()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #plt.figure()
 #data1 = np.loadtxt(str(filepath) + '/' + str(filename1), skiprows=21)
 #t1 = data1[:,0]
