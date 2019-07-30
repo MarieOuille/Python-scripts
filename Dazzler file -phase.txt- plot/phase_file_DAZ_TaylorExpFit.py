@@ -11,8 +11,8 @@ from matplotlib import pyplot as plt
 import scipy as sc
 
 ### ordres 1,2,3,4 du dazzler numero 2
-filepath = r'F:\sn3\boost'
-filename ='phase-8b-broad'
+filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Dazzler file -phase.txt- plot'
+filename ='phase-testDazSN321percent'
 file= str(filename) + '.txt'
 output_dir=filepath
 
@@ -62,4 +62,4 @@ plt.ylabel('phase (rad)')
 plt.xlabel('wavelength (nm)')
 plt.legend(loc='best', fontsize='large')
 plt.title ('GDD = ' + str(round(func_fit[0][2])) +' fs2 \n TOD = ' + str(round(func_fit[0][3])) + ' fs3  \n  FOD = ' + str(round(func_fit[0][4]))  + ' fs4   \n  5th order = ' + str(round(func_fit[0][5])) + ' fs5 \n')
-plt.savefig( r'C:\Users\ouille\Desktop\codes_python_divers\\Taylor series expansion fit of the phase file obtained from Wizzler.png',dpi=600,  bbox_inches='tight')
+plt.savefig( r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\Dazzler file -phase.txt- plot\\Taylor series expansion fit of the phase file obtained from Wizzler.png',dpi=600,  bbox_inches='tight')
