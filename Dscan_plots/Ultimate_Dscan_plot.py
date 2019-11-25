@@ -12,16 +12,17 @@ from matplotlib.gridspec import GridSpec
 from scipy import interpolate
 
 # info on where and how to save the image
-outdir = r'C:\Users\ouille\Desktop\codes_python_divers'
-P = '1100' #mbar
-E = '4.1' #mJ
+#outdir = r'C:\Users\ouille\Desktop\codes_python_divers'
+outdir = r'C:\Users\ouille\Desktop'
+P = '850' #mbar
+E = 'unknown' #mJ
 
 
 
 
 #Load files
-filepath = r'Z:\Laser\D-Scan\HCF\20190305'
-filename= '1100mbar-4.1mJ'
+filepath = r'Z:\Laser\D-Scan\HCF\20191122'
+filename = 'dscan_850mbar'
 f_spectrum  =  filepath + '\\' + filename + '_spectrum.csv'
 f_pulse     =  filepath +  '\\' + filename + '_retrieved_pulse.csv'
 f_retrieved = filepath +  '\\' + filename + '_retrieved_dscan.csv'
@@ -58,6 +59,8 @@ nI= float(fheader[1][3:6])
 meas_SHG_wl = data[0:nWL]
 meas_insertions = data[nWL:(nWL+nI)]
 meas_dscan = np.reshape(data[nWL+nI:np.size(data)],(nI, nWL))
+
+
 
 
 
@@ -103,6 +106,8 @@ retrieved = plt.pcolor(ret_SHG_wl, ret_insertions, ret_dscan/np.max(ret_dscan), 
 retrieved = plt.xlabel('Wavelength (nm)');
 retrieved = plt.ylabel('Insertion (mm)');
 retrieved = plt.title('Retrieved', weight='bold');
+              
+                     
                      
            
                      
@@ -136,6 +141,8 @@ f = interpolate.interp1d(pulse_T[1:np.size(pulse_T)-2], pulse_Car[1:np.size(puls
 T = FWHM(X_new, f(X_new))
 print(str(T) + ' fs FWHM')                
 fig.suptitle( str(round(float(T),1)) + 'fs FWHM - P=' + str(P) + 'mbar - E=' + str(E)+ 'mJ  --  date = ' + str(filepath[len(filepath)-8:len(filepath)]) )                     
-                     
-#save figure
-#plt.savefig(str(outdir) + '\\' +str(filepath[len(filepath)-8:len(filepath)]) + '__' +  str(filename) + '.png', dpi=200)
+  
+
+                   
+#☺save figure
+plt.savefig(str(outdir) + '\\' +str(filepath[len(filepath)-8:len(filepath)]) + '__' +  str(filename) + '.png', dpi=200)
