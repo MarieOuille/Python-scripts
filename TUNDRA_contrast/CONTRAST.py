@@ -18,22 +18,31 @@ cwd = os.getcwd()
 
 #FEMTOPOWER
 
-filepath = r'Z:\Laser\TUNDRA\20190612-SN2-CC'
-filename0='AC20190612-1538-'
+filepath = r'Z:\Laser\Contrast\TUNDRA\20191104'
+filename0='AC20191104-1708-'
 file = str(filepath) + '/' + str(filename0) + '.dat'
+
+#filepath2 = r'Z:\Laser\Contrast\TUNDRA\20191030'
+#filename2='AC20191030-1409-'
+#file2 = str(filepath2) + '/' + str(filename2) + '.dat'
+          
 
 data0 = np.loadtxt(str(file), skiprows=20)
 t0 = data0[:,0]
+#data2 = np.loadtxt(str(file2), skiprows=20)
+#t2 = data2[:,0]
+
 fig = plt.figure(figsize=[10,6])
-plt.semilogy(t0, (data0[:,1])/max(data0[:,1]), label= 'original trace', color='navy')
-#plt.semilogy(t0, (data0[:,1][::-1])/max(data0[:,1]), label= 'mirrored trace', color='navy', alpha = 0.2)
-#plt.xlim(-900,-800)
-#plt.ylim(1e-13, 1e-6)
+plt.semilogy(t0, (data0[:,1])/max(data0[:,1]), label= 'original', color='navy')
+#plt.semilogy(t2, (data2[:,1])/max(data2[:,1]), label= 'GRISMs', color='red')
+plt.semilogy(-t0[::-1], (data0[:,1][::-1])/max(data0[:,1]), label= 'mirrored trace', color='navy', alpha = 0.2)
+plt.xlim(-30,30)
+#plt.ylim(1e-13, 1e+1)
 plt.xlabel('time (ps)')
 plt.ylabel('Normalized intensity (log scale, a.u.)')
 plt.legend()
-fig.suptitle('Compression Chamber, 0 mbar' + '\n' + 'file = ' + str(filename0))
-plt.savefig(str(filepath)+ '\\' + str(filename0) + '_plot.png'  , dpi=500)
+fig.suptitle('After the gratings' + '\n' + 'file = ' + str(filename0)  ) 
+plt.savefig(str(filepath)+ '\\' + str(filename0) + '_plot_30ps.png'  , dpi=500)
 
 
 
