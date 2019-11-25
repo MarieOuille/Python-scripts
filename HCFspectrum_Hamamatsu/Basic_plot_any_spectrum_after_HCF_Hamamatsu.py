@@ -12,8 +12,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 ################################################# SPECTRA
-filepathSPEC = r'Z:\Laser\Spectra\HCF\2018\05\23'
-filenameSPEC ='4.2mJThorlabs-1200mbar0'
+filepathSPEC = r'Z:\Laser\Spectra\HCF\2017\02\06'
+filenameSPEC ='Vacuum-4.3mJThorl1'
 
 #100 mesures, chacune intégrée sur 10 ms donc 10 pulses.
 fileSPEC = str(filenameSPEC) + '.dat'
