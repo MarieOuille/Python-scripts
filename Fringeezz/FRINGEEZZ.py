@@ -1,3 +1,16 @@
+"""
+ STRUCTURE OF THE HDF FILES :    
+ The hdf5 file is divided into 3 parts : CEP values ; time stamps ; configuration
+ Each carrier-enveloppe phase value is recorded as an integer : you must divide by 10 000 to get it in radians
+ phase values are recorded in an array
+ Each line of this array corresponds to a 20second-long measurement (parameter 'phase points' defined through the Fringeezz software : if phase points = 20 000, each line corresponds to 20sec)
+ timestamps : list of times (sec) when each measurement line ended 
+ printing timestamps[1] - timestamps[0] should therefore return 20 as there are 20 seconds between two lines of measurements
+
+"""
+
+
+
 
 
 # libraries
@@ -17,8 +30,8 @@ from scipy.signal import welch # PSD using Welch method
 #filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
 
 #option 2 : enter it manually here :
-filepath = r'Z:\Laser\CEP\20190430'
-filename = 'phase_log_20190430_152122'
+filepath = r'Z:\Laser\CEP\20191120\fringeezz'
+filename = 'phase_log_20191120_121032'
 
 
 
@@ -49,13 +62,6 @@ def fringeezz_load_h5_data_log(file, filepath, print_structure=True):
 config, timestamps, phases = fringeezz_load_h5_data_log(file,filepath) #calls the function defined above to extract data from your hdf5 file 
 print(config) #To get info on the configuration of the Fringeezz at the time of the measurement :
 
-# STRUCTURE OF THE HDF FILES :    
-# The hdf5 file is divided into 3 parts : CEP values ; time stamps ; configuration
-# Each carrier-enveloppe phase value is recorded as an integer : you must divide by 10 000 to get it in radians
-# phase values are recorded in an array
-# Each line of this array corresponds to a 20second-long measurement (parameter 'phase points' defined through the Fringeezz software : if phase points = 20 000, each line corresponds to 20sec)
-# timestamps : list of times (sec) when each measurement line ended 
-# printing timestamps[1] - timestamps[0] should therefore return 20 as there are 20 seconds between two lines of measurements
 # so now, let's deal with these raw data and turn it into nice basic lists :
     
 list_phases = phases[0]
