@@ -18,8 +18,8 @@ from itertools import takewhile
 #filename = input('The name of the file is :')
 
 
-filepath = r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\APS800'
-filename ='cep after second dazzler loop3'
+filepath = r'Z:\Laser\CEP\20191121'
+filename ='DM50off-noPockelsCell-CEPafterGratings'
 
 
 file= str(filename) + '.dat'
