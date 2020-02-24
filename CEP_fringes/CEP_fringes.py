@@ -37,8 +37,10 @@ tau_0 = 4 #input pulse duration FWHM in fs    3.6fs initially
 lambda_0 = 790 #input carrier wavelength in nm
 omega_0 = 2*np.pi*299792458 / lambda_0 *1e-6  # in PHz
 
+
+
 #spectral phase :
-k00 = 1.9*np.pi# constant phase = CEP   
+k00 = 0.5*np.pi# constant phase = CEP   
 k10 = 0 # delay in fs
 k20 = 36# input pulse GDD fs^2 (1mm of fused silica = 36.163 fs² at 800nm, cf refractive index.info)
 k30 = 0# input pulse TOD fs^3
@@ -105,12 +107,6 @@ interf = np.abs((simple + double)**2)
 #plt.xlabel('Wavelength (nm)', fontsize=14)
 #plt.ylabel('Spectral intensity (a.u.)', fontsize=14)
 #plt.legend(fontsize='14')
-#
-#
-#
-#
-#
-
 
          
 fig = plt.figure(figsize=(10,7))
@@ -130,3 +126,4 @@ plt.legend(fontsize='14')
 
 
 fig.suptitle('CEP = ' + str(round(k00/np.pi,1)) + '$\pi$', fontsize = 16)
+fig = plt.savefig(r'C:\Users\ouille\Desktop\GitHub_users\GitHub_MarieOuille\Python-scripts\CEP_fringes\GDD36fs2\\' + 'GDD' +str(k20)+   'fs2_CEP' + str(round(k00/np.pi,1))[0] + '-' + str(round(k00/np.pi,1))[2] + 'pi_480nm.png')
