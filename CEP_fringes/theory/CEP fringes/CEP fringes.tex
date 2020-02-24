@@ -1,0 +1,95 @@
+
+\documentclass[a4paper,twoside,10pt]{report}
+%	Paper Size: a4paper / a5paper / b5paper / letterpaper / legalpaper / executivepaper
+% Duplex: oneside / twoside
+% Base Font Size: 10pt / 11pt / 12pt
+
+
+\usepackage[USenglish]{babel} %francais, polish, spanish, ...
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+
+\usepackage{lmodern} %Type1-font for non-english texts and characters
+
+\usepackage{graphicx} %%For loading graphic files
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+
+\begin{document}
+
+\pagestyle{empty} %No headings for the first pages.
+
+
+
+\title{Simulating CEP fringes for Salle Noire 2.0}
+\author{Marie Ouillé}
+%\date{} %%If commented, the current date is used.
+
+\maketitle
+
+
+
+\pagestyle{plain} %Now display headings: headings / fancy / ...
+
+\chapter{Gaussian spectra}\label{hints}
+
+In this chapter we consider the laser pulses to have a gaussian spectral shape and a flat spectral phase, except for a small amount of GDD introduced to simulate the exit window of the compression chamber.
+
+\section{Fundamental field}\label{umlauts}
+
+The fundamental electric field is expressed by :
+\\
+
+$E_{fund}(\omega) = e^ {- \frac{a^2}{2}(\omega - \omega_0)^2}  e^{ -i\Phi(\omega) }$\\ 
+
+with $\Phi(\omega) = k_{00} + k_{10}(\omega - \omega_0) +  \frac{k_{20}}{2!}(\omega - \omega_0)^2 +  \frac{k_{30}}{3!}(\omega - \omega_0)^3 +   \frac{k_{40}}{4!}(\omega - \omega_0)^4 $\\
+
+$\omega_0$ is the central frequency and corresponds to 790nm. 
+$k_{00}$ is the CEP.
+$k_{20}$ is the GDD or 'chirp'.
+\\
+
+\section{SHG field}\label{references}
+
+The fringeezz analyzes the CEP fringes in the spectrum around 480nm.\\
+
+We use a BBO crystal to frequency double the red components.\\
+
+Let's assume the SHG field is a gaussian centered around $\omega_{0, blue}$, corresponding to 480nm : \\
+
+
+$E_{SHG}(\omega) = \sqrt{att}  \ e^ {- \frac{a_{blue}^2}{2}(\omega - \omega_{0, blue})^2}  e^{ -i2\Phi(\omega) }$ \\
+
+
+This wave has twice the spectral phase and has a width $a_{blue}$ which depends on the BBO thickness and the fundamental spectral intensity.\\
+
+att is an attenuation factor representing the SHG efficiency and the attenuation by the polarizing beam splitter in the f-2f interferometer, used to maximize the contrast of the fringes.\\
+
+I'm sure we can do better than this, not very clear so far why the SHG field should be expressed like that.
+
+
+\section{CEP fringes}\label{dividing}
+ 
+The total detected spectral intensity is expressed by : \\
+
+$ |E_{fund}(\omega) + E_{SHG}(\omega)|^2 $\\
+
+
+
+
+
+
+
+
+
+
+\chapter{Measured spectrum and spectral phase (using d-scan measurements)}\label{hints}
+
+
+
+
+\end{document}
+

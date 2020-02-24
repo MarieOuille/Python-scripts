@@ -40,7 +40,7 @@ omega_0 = 2*np.pi*299792458 / lambda_0 *1e-6  # in PHz
 
 
 #spectral phase :
-k00 = 0.5*np.pi# constant phase = CEP   
+k00 = 0.1*np.pi# constant phase = CEP   
 k10 = 0 # delay in fs
 k20 = 36# input pulse GDD fs^2 (1mm of fused silica = 36.163 fs² at 800nm, cf refractive index.info)
 k30 = 0# input pulse TOD fs^3
@@ -93,7 +93,7 @@ double = np.sqrt(att) * np.exp((-(a(10))**2)/2*(omega-omega_d)**2) * np.exp(-2j*
 
 
 #%% interferences
-interf = np.abs((simple + double)**2)
+interf = (np.abs(simple + double))**2
 
      
          

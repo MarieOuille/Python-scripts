@@ -1,0 +1,6 @@
+\babel@toc {USenglish}{}
+\contentsline {chapter}{\numberline {1}Some small hints}{3}
+\contentsline {section}{\numberline {1.1}German Umlauts and other Language Specific Characters}{3}
+\contentsline {section}{\numberline {1.2}References}{3}
+\contentsline {section}{\numberline {1.3}Dividing Large Documents}{3}
+\vspace *{\baselineskip }
