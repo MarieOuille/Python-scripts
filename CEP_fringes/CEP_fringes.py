@@ -84,7 +84,7 @@ simple = field(omega,omega_0,3)
 #%% frequency doubling
 #twice the spectral phase
 omega_d = 2*np.pi*299792458 / 480 *1e-6  #enveloppe centered around 480nm
-#spectral bandwidth depends on the BBP efficiency (thickness, orientation)... parameter a(t0) to be tweaked below... width of the gaussian
+#spectral bandwidth depends on the BBO efficiency (thickness, orientation)... parameter a(t0) to be tweaked below... width of the gaussian
 att =0.08 #attenuation induced by rotating the PBS
 double = np.sqrt(att) * np.exp((-(a(10))**2)/2*(omega-omega_d)**2) * np.exp(-2j*phase(omega,omega_0))
 
