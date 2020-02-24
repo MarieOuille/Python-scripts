@@ -13,16 +13,16 @@ from scipy import interpolate
 
 # info on where and how to save the image
 #outdir = r'C:\Users\ouille\Desktop\codes_python_divers'
-outdir = r'C:\Users\ouille\Desktop'
-P = '850' #mbar
-E = 'unknown' #mJ
+outdir = r'Z:\Laser\Compte-rendus\laser_meas_maintenance'
+P = '1500' #mbar
+E = '4.15' #mJ
 
 
 
 
 #Load files
-filepath = r'Z:\Laser\D-Scan\HCF\20191122'
-filename = 'dscan_850mbar'
+filepath = r'Z:\Laser\D-Scan\HCF\20200114'
+filename = '1500mbar-4_15mJ-23100fs2--630_5e3fs3-580e3fs4'
 f_spectrum  =  filepath + '\\' + filename + '_spectrum.csv'
 f_pulse     =  filepath +  '\\' + filename + '_retrieved_pulse.csv'
 f_retrieved = filepath +  '\\' + filename + '_retrieved_dscan.csv'
@@ -37,8 +37,8 @@ spectrum_phase = raw_data[:,2]
 #load temporal intensity and phase
 raw_data = np.genfromtxt(f_pulse, delimiter=',', dtype=float)
 pulse_T = raw_data[:,0]
-pulse_Env = raw_data[:,1]
-pulse_Car = raw_data[:,2] 
+pulse_Env = raw_data[:,3]
+pulse_Car = raw_data[:,4] 
 
 #load retrieved trace
 data=  np.genfromtxt(f_retrieved, dtype=float)
@@ -140,7 +140,7 @@ pulse_T = np.nan_to_num(pulse_T)
 f = interpolate.interp1d(pulse_T[1:np.size(pulse_T)-2], pulse_Car[1:np.size(pulse_T)-2]**2)
 T = FWHM(X_new, f(X_new))
 print(str(T) + ' fs FWHM')                
-fig.suptitle( str(round(float(T),1)) + 'fs FWHM - P=' + str(P) + 'mbar - E=' + str(E)+ 'mJ  --  date = ' + str(filepath[len(filepath)-8:len(filepath)]) )                     
+fig.suptitle( '12_PC1332_ '+ str(round(float(T),1)) + 'fs FWHM - P=' + str(P) + 'mbar - E=' + str(E)+ 'mJ  --  date = ' + str(filepath[len(filepath)-8:len(filepath)]) )                     
   
 
                    
