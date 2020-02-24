@@ -58,7 +58,7 @@ save = 0
 #spectral phase :
 k00 = 0 # constant phase = CEP   
 k10 = 0 # delay in fs
-k20 = -275 # input pulse GDD fs^2 (1mm of fused silica = 36.163 fs² at 800nm, cf refractive index.info)
+k20 = 275 # input pulse GDD fs^2 (1mm of fused silica = 36.163 fs² at 800nm, cf refractive index.info)
 k30 = 0# input pulse TOD fs^3
 k40 = 0 #FOD
 
