@@ -30,8 +30,8 @@ from scipy.signal import welch # PSD using Welch method
 #filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
 
 #option 2 : enter it manually here :
-filepath = r'Z:\Laser\CEP\20191120\fringeezz'
-filename = 'phase_log_20191120_121032'
+filepath = r'Z:\Laser\CEP\20190425'
+filename = 'phase_log_20190425_182241'
 
 
 
@@ -67,7 +67,7 @@ print(config) #To get info on the configuration of the Fringeezz at the time of 
 list_phases = phases[0]
 for i in np.arange(1,np.size(phases[:,1])):
     list_phases = np.append(list_phases, phases[i])
-ecart_type = int( np.sqrt(np.mean(list_phases**2)-(np.mean(list_phases))**2) * 1000)
+ecart_type = int( np.sqrt(np.mean(list_phases**2)-(np.mean(list_phases))**2) *1000)
 #getting rid of the 'nan' :
 for i in np.arange(0,np.size(list_phases)-1):
     if list_phases[i] != 0:
@@ -75,9 +75,11 @@ for i in np.arange(0,np.size(list_phases)-1):
         start = i
         break
 list_phases = list_phases[start:np.size(list_phases)] - np.mean(list_phases[start:np.size(list_phases)])
+
 #we don't actually use the time stamps as we know there is 1ms between each phase measurement
 time = np.arange(0,np.size(phases[0])*np.size(phases[:,1]))
 time = (time[start:np.size(time)]-start)/60000
+
 
        
        
