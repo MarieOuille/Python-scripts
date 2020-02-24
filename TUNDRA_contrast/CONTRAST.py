@@ -18,8 +18,8 @@ cwd = os.getcwd()
 
 #FEMTOPOWER
 
-filepath = r'Z:\Laser\Contrast\TUNDRA\20191104'
-filename0='AC20191104-1708-'
+filepath = r'Z:\Laser\Contrast\TUNDRA\2020\20200115'
+filename0='AC20200115-1841-'
 file = str(filepath) + '/' + str(filename0) + '.dat'
 
 #filepath2 = r'Z:\Laser\Contrast\TUNDRA\20191030'
@@ -27,7 +27,22 @@ file = str(filepath) + '/' + str(filename0) + '.dat'
 #file2 = str(filepath2) + '/' + str(filename2) + '.dat'
           
 
-data0 = np.loadtxt(str(file), skiprows=20)
+#Read infos contained in the first lines
+data1 = open(file, 'r')
+line = data1.readlines()
+k=[]
+j=[]
+for i in (np.arange(0,np.size(line))): 
+    if 'END_HEADER' in line[i]:
+        k=i-1
+    if 'measurements/point' in line[i]:
+        j.append(i)
+print(line[max(j)+1 : k+1])
+            
+            
+            
+            
+data0 = np.loadtxt(str(file), skiprows=k+2)
 t0 = data0[:,0]
 #data2 = np.loadtxt(str(file2), skiprows=20)
 #t2 = data2[:,0]
@@ -35,21 +50,20 @@ t0 = data0[:,0]
 fig = plt.figure(figsize=[10,6])
 plt.semilogy(t0, (data0[:,1])/max(data0[:,1]), label= 'original', color='navy')
 #plt.semilogy(t2, (data2[:,1])/max(data2[:,1]), label= 'GRISMs', color='red')
+
+#if mirrored :
 plt.semilogy(-t0[::-1], (data0[:,1][::-1])/max(data0[:,1]), label= 'mirrored trace', color='navy', alpha = 0.2)
-plt.xlim(-30,30)
-#plt.ylim(1e-13, 1e+1)
+
+
+plt.xlim(-10,10)
+plt.ylim(1e-9, 1e+1)
 plt.xlabel('time (ps)')
 plt.ylabel('Normalized intensity (log scale, a.u.)')
 plt.legend()
-fig.suptitle('After the gratings' + '\n' + 'file = ' + str(filename0)  ) 
-plt.savefig(str(filepath)+ '\\' + str(filename0) + '_plot_30ps.png'  , dpi=500)
+fig.suptitle(str(line[max(j)+1 : k+1]) + '\n' + 'file = ' + str(filename0)  ) 
+plt.savefig(str(filepath)+ '\\' + str(filename0) + '_zoom10_plot.png'  , dpi=500)
 
 
-
-
-#Read infos contained in the first lines
-data1 = open(file, 'r')
-line = data1.readlines()
 
 
 
