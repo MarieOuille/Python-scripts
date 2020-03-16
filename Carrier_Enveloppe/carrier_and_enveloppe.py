@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 t = np.linspace(-30*10**(-15),30*10**(-15),2*10000, endpoint=False)
 f=3/8*10**15   #800nm
-a=(3.5/2.35)*10**(-15)    #X fs fwhm = 2.35 a
+a=(3.5/2.35)*10**(-15)    #durée en fs fwhm = 2.35 a
 
 def A(x):
     return np.exp(-x**2/(2*a**2))
@@ -16,7 +16,7 @@ CEPin = input('What CEP value do you want (in multiple of Pi, and no fraction pl
 
 plt.plot(t, A(t), 'b--')
 plt.plot(t, -1*A(t), 'b--')
-plt.plot(t, E(t, float(CEPin) * np.pi), color='red')
+plt.plot(t, (E(t, float(CEPin) * np.pi)).real, color='red')
 plt.xlabel('Time (fs)', fontsize='16')
 plt.ylabel('Electric field (a.u.)', fontsize='16')
 plt.yticks((-1,-0.5,0,0.5,1))

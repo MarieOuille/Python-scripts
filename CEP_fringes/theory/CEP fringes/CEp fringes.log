@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.14)  24 FEB 2020 17:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.14)  26 FEB 2020 10:54
 entering extended mode
 **"./CEp fringes.tex"
 ("CEp fringes.tex"
@@ -383,6 +383,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 78--79
 
  []
 
+
+Overfull \hbox (7.30367pt too wide) in paragraph at lines 81--82
+[]\T1/lmr/m/n/10 The spec-tral mod-u-la-tions, called 'CEP fringes', are given by the term $\OT1/lmr/m/n/10 (\OML/lmm/
+m/it/10 !\OT1/lmr/m/n/10 ) =
+ []
+
 [3]
 Chapter 2.
 [4
@@ -395,7 +401,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  3110 strings out of 493303
  42159 string characters out of 3138853
- 106154 words of memory out of 3000000
+ 107154 words of memory out of 3000000
  6570 multiletter control sequences out of 15000+200000
  52706 words of font info for 54 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -408,7 +414,7 @@ mi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program
 lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
 m/lmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
 m/lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb>
-Output written on "CEp fringes.pdf" (4 pages, 179560 bytes).
+Output written on "CEp fringes.pdf" (4 pages, 181539 bytes).
 PDF statistics:
  65 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

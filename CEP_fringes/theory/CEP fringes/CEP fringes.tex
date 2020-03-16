@@ -56,12 +56,12 @@ $k_{20}$ is the GDD or 'chirp'.
 
 The fringeezz analyzes the CEP fringes in the spectrum around 480nm.\\
 
-We use a BBO crystal to frequency double the red components.\\
+We use a BBO crystal to frequency double the red components. Two photons at 960nm combine to form one photon at 480nm.\\
 
 Let's assume the SHG field is a gaussian centered around $\omega_{0, blue}$, corresponding to 480nm : \\
 
 
-$E_{SHG}(\omega) = \sqrt{att}  \ e^ {- \frac{a_{blue}^2}{2}(\omega - \omega_{0, blue})^2}  e^{ -i2\Phi(\omega) }$ \\
+$E_{SHG}(\omega) = \sqrt{att}  \ e^ {- \frac{a_{blue}^2}{2}(\omega - \omega_{0, blue})^2}  e^{ -i2\Phi(\omega /2) }$ \\
 
 
 This wave has twice the spectral phase and has a width $a_{blue}$ which depends on the BBO thickness and the fundamental spectral intensity.\\
@@ -75,10 +75,10 @@ I'm sure we can do better than this, not very clear so far why the SHG field sho
  
 The total detected spectral intensity is expressed by : \\
 
-$ |E_{fund}(\omega) + E_{SHG}(\omega)|^2 $\\
+$ I_{tot}(\omega) = |E_{fund}(\omega) + E_{SHG}(\omega)|^2 $\\
 
 
-
+The spectral modulations, called 'CEP fringes', are given by the term $\Delta\Phi (\omega) = \Phi_{fund}(\omega) - \Phi_{SHG}(\omega) = \Phi_{fund}(\omega) - 2\Phi_{fund}(\omega/2)$ and more precisely the cosine of $\Delta\Phi$.
 
 
 

@@ -17,8 +17,8 @@ from itertools import takewhile
 #print ('\n', 'What is the name of the .dat file?  (e.g : 20190301_CEPdata) ')
 #filename = input('The name of the file is :  ')
 
-filepath = r'Z:\Laser\CEP\20190430'
-filename ='30ms'
+filepath = r'Z:\Laser\CEP\20200311\AfterXPW'
+filename ='XPW220uJ_noFeedback_ACon'
 
 
 
@@ -129,9 +129,10 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0, partial=0, start
     if lines2pi == 1: # Puts some horizontal lines every 2Pi starting from target value
         targetp = target[a]   #CEP target value
         plt.axhline(targetp, color = 'grey', alpha = 0.8, linewidth = 1)  #horizontal line = target value
+        plt.axhline(targetp + 2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1, label='$\pm 2n\pi$, n integer')
         upper = max(round(max(phase[a:b])/(2*np.pi)),  abs(round(min(phase[a:b])/(2*np.pi))) )
         for k in np.arange(1,upper+1):  
-            plt.axhline(targetp + k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1, label='$\pm 2n\pi$, n integer')
+            plt.axhline(targetp + k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1)
             plt.axhline(targetp - k*2*np.pi, color = 'grey', alpha = 0.3, linewidth = 1)
     if picenter == 1:
         plt.ylim([-np.pi,np.pi])
@@ -198,7 +199,7 @@ def APS (filepath, filename, n, save=1, picenter=0, lines2pi=0, partial=0, start
 
 
 
-APS (filepath, filename, 0, save=1, picenter=0, lines2pi=0, partial = 0, start=0 , end=10)   
+APS (filepath, filename, 0, save=0, picenter=1, lines2pi=0, partial = 1, start=30 , end=38)   
 #the 3rd argument is the measurement number you want to plot ; Be careful, it starts with 0 !!!
 #save = 1 to save the .png file
 #picenter = 1 : YES, plot between -pi and +pi

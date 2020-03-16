@@ -28,8 +28,8 @@ from scipy.signal import welch # PSD using Welch method
 #filename = input('The name of the file is :')   # e.g. :  'phase_log_20170512_110754' 
 
 #option 2 : enter it manually here :
-filepath = r'Z:\Laser\CEP\20200218'
-filename = 'phase_log_20200218_164551'
+filepath = r'Z:\Laser\CEP\20140923'
+filename = 'AfterBooster'
 
 
 
@@ -67,14 +67,18 @@ for i in np.arange(1,np.size(phases[:,1])):
     list_phases = np.append(list_phases, phases[i])
 
                    
-ecart_type = int( np.sqrt(np.mean(list_phases**2)-(np.mean(list_phases))**2) * 1000)
 #getting rid of the 'nan' :
 for i in np.arange(0,np.size(list_phases)-1):
-    if list_phases[i] != 0:
+    if list_phases[i] != list_phases[0]:
         print(i) 
         start = i
         break
-list_phases = list_phases[start:np.size(list_phases)] # - np.mean(list_phases[start:np.size(list_phases)])
+list_phases = list_phases[start:np.size(list_phases)] #- np.mean(list_phases[start:np.size(list_phases)])
+
+
+ecart_type = int( np.sqrt(np.mean(list_phases**2)-(np.mean(list_phases))**2) * 1000)
+
+
 
 #we don't actually use the time stamps as we know there is 1ms between each phase measurement
 time = np.arange(0,np.size(phases[0])*np.size(phases[:,1]))
@@ -95,7 +99,7 @@ c = 'navy'  #color
 f, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(9,3), gridspec_kw = {'width_ratios':[2.3, 0.7]})
 plt.subplots_adjust(left=0.05, right=0.97, wspace=0.01)
 ax1.plot(time, list_phases, '.', markersize = 1, color = c)
-#ax1.set_ylim([-np.pi,np.pi])
+ax1.set_ylim([np.pi/2,2*np.pi])
 #ax1.set_yticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi])
 #ax1.set_yticklabels(['$-\pi$', '-$\pi$/2', '0', '$\pi$/2' , '$\pi$'])
 ax1.set_xlim([0, max(time)])
@@ -105,7 +109,7 @@ ax1.set_ylabel('CEP (rad)', fontsize=s)
 ax2.hist(list_phases, bins=25, orientation='horizontal',color = c)
 ax2.set_xlabel('occurrence', fontsize=s)
 ax2.tick_params(labelsize=s)
-ax2.annotate('$\sigma_{rms} = $' + str(ecart_type) + ' mrad', xy=(5,1), size = s +2)
+ax2.annotate('$\sigma_{rms} = $' + str(ecart_type) + ' mrad', xy=(2,2), size = s +2)
 ax2.set_axis_off()
 f.savefig(str(output_dir) + '/' + str(file[0:len(file)-5]) + '_Phase_and_Histo' + '.png', dpi=400,bbox_inches='tight')
 
