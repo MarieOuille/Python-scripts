@@ -3,6 +3,12 @@
 Created on Fri May 29 11:54:56 2020
 
 @author: ouille
+
+This script generates a .png figure showing the temporal and spectral phases and intensity profiles.
+It requires 3 .txt files 
+These 3 files are directly generated from the Wizzler software 
+(!! It can be tricky : don't write any filename when saving from the Wizzler and point a folder only !!
+ Otherwise the software returns an error and crashes)
 """
 
 #%% librairies
