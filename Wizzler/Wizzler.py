@@ -91,3 +91,4 @@ ax22.legend(fontsize=s)
 
 #%% save figure
 fig = plt.savefig(outdir + '\\' + filename + 'figure.png', bboxinches='tight', dpi=300)
+data.close()
