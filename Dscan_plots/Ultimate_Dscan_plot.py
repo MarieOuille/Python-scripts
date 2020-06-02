@@ -44,8 +44,8 @@ pulse_Car = raw_data[:,4]
 data=  np.genfromtxt(f_retrieved, dtype=float)
 data=data[2:np.size(data)]
 fheader = np.genfromtxt(f_retrieved, dtype=None)
-nWL = float(fheader[0][4:7])
-nI= float(fheader[1][3:6])
+nWL = int(fheader[0][4:7])
+nI= int(fheader[1][3:6])
 ret_SHG_wl = data[0:nWL]
 ret_insertions = data[nWL:(nWL+nI)]
 ret_dscan = np.reshape(data[nWL+nI:np.size(data)],(nI, nWL))
@@ -54,8 +54,8 @@ ret_dscan = np.reshape(data[nWL+nI:np.size(data)],(nI, nWL))
 data = np.genfromtxt(f_measured, dtype=float)
 data=data[2:np.size(data)]
 fheader = np.genfromtxt(f_retrieved, dtype=None)
-nWL = float(fheader[0][4:7])
-nI= float(fheader[1][3:6])
+nWL = int(fheader[0][4:7])
+nI= int(fheader[1][3:6])
 meas_SHG_wl = data[0:nWL]
 meas_insertions = data[nWL:(nWL+nI)]
 meas_dscan = np.reshape(data[nWL+nI:np.size(data)],(nI, nWL))
