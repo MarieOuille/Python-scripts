@@ -13,16 +13,16 @@ from scipy import interpolate
 
 # info on where and how to save the image
 #outdir = r'C:\Users\ouille\Desktop\codes_python_divers'
-outdir = r'Z:\Laser\Compte-rendus\laser_meas_maintenance'
-P = '1500' #mbar
-E = '4.15' #mJ
+outdir = r'C:\Users\ouille\Desktop\Generated_Files'
+P = '1200' #mbar
+E = '4' #mJ
 
 
 
 
 #Load files
-filepath = r'Z:\Laser\D-Scan\HCF\20200114'
-filename = '1500mbar-4_15mJ-23100fs2--630_5e3fs3-580e3fs4'
+filepath = r'Z:\Laser\D-Scan\HCF\20200303'
+filename = '1200mbar-3_4mJThorlabs'
 f_spectrum  =  filepath + '\\' + filename + '_spectrum.csv'
 f_pulse     =  filepath +  '\\' + filename + '_retrieved_pulse.csv'
 f_retrieved = filepath +  '\\' + filename + '_retrieved_dscan.csv'
@@ -140,7 +140,7 @@ pulse_T = np.nan_to_num(pulse_T)
 f = interpolate.interp1d(pulse_T[1:np.size(pulse_T)-2], pulse_Car[1:np.size(pulse_T)-2]**2)
 T = FWHM(X_new, f(X_new))
 print(str(T) + ' fs FWHM')                
-fig.suptitle( '12_PC1332_ '+ str(round(float(T),1)) + 'fs FWHM - P=' + str(P) + 'mbar - E=' + str(E)+ 'mJ  --  date = ' + str(filepath[len(filepath)-8:len(filepath)]) )                     
+fig.suptitle( str(round(float(T),1)) + 'fs FWHM - P=' + str(P) + 'mbar - E=' + str(E)+ 'mJ  --  date = ' + str(filepath[len(filepath)-8:len(filepath)]) )                     
   
 
                    
