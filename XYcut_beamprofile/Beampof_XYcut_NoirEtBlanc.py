@@ -3,6 +3,13 @@
 Created on Mon May 14 10:40:15 2018
 
 @author: ouille
+
+For this script to work, you need to display figures in new windows 
+That's because you need to point the center of the beam with the mouse (GINPUT)
+To do that With Spyder :
+Outils > Préférences > Console IPython > Graphiques > Automatique
+Then restart kernel (right click on the console)
+And run the script !
 """
 
 from PIL import Image
@@ -32,8 +39,8 @@ plt.imshow(imarray, cmap='jet')
 plt.title('Choose a point')
 point = plt.ginput(1,10)
 plt.close()
-xmax = point[0][0]
-ymax=point[0][1]
+xmax = int(point[0][0])
+ymax= int(point[0][1])
 
 
 
