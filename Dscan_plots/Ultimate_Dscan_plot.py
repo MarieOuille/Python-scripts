@@ -18,11 +18,12 @@ P = '1200' #mbar
 E = '4' #mJ
 
 
-
-
 #Load files
 filepath = r'Z:\Laser\D-Scan\HCF\20200303'
 filename = '1200mbar-3_4mJThorlabs'
+
+
+
 f_spectrum  =  filepath + '\\' + filename + '_spectrum.csv'
 f_pulse     =  filepath +  '\\' + filename + '_retrieved_pulse.csv'
 f_retrieved = filepath +  '\\' + filename + '_retrieved_dscan.csv'
