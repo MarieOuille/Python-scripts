@@ -5,21 +5,21 @@ Created on Thu May 24 16:36:56 2018
 @author: ouille
 """
 
-
+#%% librairies
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 import os
 import scipy
 
-cwd = os.getcwd()
 
 
-
-#FEMTOPOWER
-
+#%% indicate the file and file path (to be changed)
 filepath = r'Z:\Laser\Contrast\TUNDRA\2020\20200115'
 filename0='AC20200115-1841-'
+save = 1  ## save = 1 if you want to save the figure as .png , 0 if not.
+
+#%% load data 
 file = str(filepath) + '/' + str(filename0) + '.dat'
 
 #filepath2 = r'Z:\Laser\Contrast\TUNDRA\20191030'
@@ -27,7 +27,7 @@ file = str(filepath) + '/' + str(filename0) + '.dat'
 #file2 = str(filepath2) + '/' + str(filename2) + '.dat'
           
 
-#Read infos contained in the first lines
+##Read infos contained in the first lines
 data1 = open(file, 'r')
 line = data1.readlines()
 k=[]
@@ -47,21 +47,27 @@ t0 = data0[:,0]
 #data2 = np.loadtxt(str(file2), skiprows=20)
 #t2 = data2[:,0]
 
+
+
+
+#%% Figure
 fig = plt.figure(figsize=[10,6])
 plt.semilogy(t0, (data0[:,1])/max(data0[:,1]), label= 'original', color='navy')
 #plt.semilogy(t2, (data2[:,1])/max(data2[:,1]), label= 'GRISMs', color='red')
 
-#if mirrored :
+##to plot the mirrored trace :
 plt.semilogy(-t0[::-1], (data0[:,1][::-1])/max(data0[:,1]), label= 'mirrored trace', color='navy', alpha = 0.2)
 
 
-plt.xlim(-10,10)
-plt.ylim(1e-9, 1e+1)
+
+#plt.xlim(-20,0.0)          ## change the x-axis limits
+#plt.ylim(1e-13, 1e+0)      ## change the y-axis limits  
 plt.xlabel('time (ps)')
 plt.ylabel('Normalized intensity (log scale, a.u.)')
 plt.legend()
-fig.suptitle(str(line[max(j)+1 : k+1]) + '\n' + 'file = ' + str(filename0)  ) 
-plt.savefig(str(filepath)+ '\\' + str(filename0) + '_zoom10_plot.png'  , dpi=500)
+fig.suptitle(str(line[max(j)+1 : k+1]) + '\n' + 'file = ' + str(filename0)  )       ## title with comments and filename
+if save == 1 :
+    plt.savefig(str(filepath)+ '\\' + str(filename0) + '.png'  , dpi=500)            
 
 
 
@@ -73,6 +79,32 @@ plt.savefig(str(filepath)+ '\\' + str(filename0) + '_zoom10_plot.png'  , dpi=500
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#%%
+
+
+
+#cwd = os.getcwd()
 
 
 
